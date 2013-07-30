@@ -33,7 +33,8 @@ var io = require('socket.io').listen(server);
 var clients = {};
 var clientCnt = 0;
 
-var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B' ];
+//var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B'];
+var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64'];
 
 // Listen for connections.
 io.sockets.on('connection', function(socket) {
@@ -71,16 +72,16 @@ io.sockets.on('connection', function(socket) {
 
 		// io.sockets.clients('ADD ROOM HERE').forEach(function (socket) { ..
 		// });
-		io.sockets.clients().forEach(function(socket) {
-			if (socket.color.colorId == colors.length - 1) {
-				socket.color.colorId = 0;
-				socket.color.value = colors[socket.color.colorId];
+		io.sockets.clients().forEach(function(sock) {
+			if (sock.color.colorId == colors.length - 1) {
+				sock.color.colorId = 0;
+				sock.color.value = colors[sock.color.colorId];
 			} else {
-				socket.color.colorId++;
-				socket.color.value = colors[socket.color.colorId];
+				sock.color.colorId++;
+				sock.color.value = colors[sock.color.colorId];
 			}
-			socket.emit('setColor', {
-				color : clients[id].color.value
+			sock.emit('setColor', {
+				color : sock.color.value
 			});
 		});
 	});
