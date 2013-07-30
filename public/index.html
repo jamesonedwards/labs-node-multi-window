@@ -6,7 +6,8 @@
 	<body>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-		  var socket = io.connect('http://localhost');
+		  //var socket = io.connect('http://localhost');
+		  var socket = io.connect('http://node.labsmb.com');
 		  socket.on('msg', function (data) {
 		  	$("#msg").text(data.msg);
 		  });

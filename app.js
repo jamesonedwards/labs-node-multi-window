@@ -26,15 +26,28 @@ if ('development' == app.get('env')) {
 var server = http.createServer(app);
 
 // The websockets server.
-// var io = require('socket.io').listen(80);
 var io = require('socket.io').listen(server);
 
 // The list of connected clients.
 var clients = {};
 var clientCnt = 0;
 
-//var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B'];
-var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64'];
+// The static list of colors.
+var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B' ];
+
+// The namespace ("room") to use for incomming connections.
+//var socketNamespace = '';
+
+//Default route.
+app.get('/', function(req, res) {
+	res.sendfile('public/index.html');
+	
+	//if (req.query.ns === '' || req.query.ns === undefined) {
+	//	socketNamespace = '';
+	//} else {
+	//	socketNamespace = req.query.ns;
+	//}
+});
 
 // Listen for connections.
 io.sockets.on('connection', function(socket) {
@@ -70,8 +83,6 @@ io.sockets.on('connection', function(socket) {
 			msg : 'Shuffle() called by user ' + id
 		});
 
-		// io.sockets.clients('ADD ROOM HERE').forEach(function (socket) { ..
-		// });
 		io.sockets.clients().forEach(function(sock) {
 			if (sock.color.colorId == colors.length - 1) {
 				sock.color.colorId = 0;
@@ -92,13 +103,7 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('msg', {
 			msg : 'User ' + id + ' disconnected.'
 		});
-		// io.sockets.emit('User disconnected.');
 	});
-});
-
-// Default route.
-app.get('/', function(req, res) {
-	res.sendfile('public/index.html');
 });
 
 server.listen(app.get('port'), function() {
