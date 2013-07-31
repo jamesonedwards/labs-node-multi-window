@@ -36,22 +36,24 @@ var clientCnt = 0;
 var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B' ];
 
 // The namespace ("room") to use for incomming connections.
-//var socketNamespace = '';
+// var socketNamespace = '';
 
-//Default route.
+// Default route.
 app.get('/', function(req, res) {
 	res.sendfile('public/index.html');
-	
-	//if (req.query.ns === '' || req.query.ns === undefined) {
-	//	socketNamespace = '';
-	//} else {
-	//	socketNamespace = req.query.ns;
-	//}
+
+	// if (req.query.ns === '' || req.query.ns === undefined) {
+	// socketNamespace = '';
+	// } else {
+	// socketNamespace = req.query.ns;
+	// }
 });
 
 // Listen for connections.
 io.sockets.on('connection', function(socket) {
+	console.log('Connecting a client.');
 	var id = clientCnt;
+	console.log('Connecting client id.');
 
 	socket.emit('msg', {
 		msg : 'Connecting...you are user ' + id
@@ -77,7 +79,8 @@ io.sockets.on('connection', function(socket) {
 		});
 	}
 
-	socket.on('shuffle', function() {
+	// Listen for color shift.
+	socket.on('shift', function() {
 		console.log('Shuffle() called');
 		io.sockets.emit('msg', {
 			msg : 'Shuffle() called by user ' + id
@@ -97,8 +100,23 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
+	// Listen for reset.
+	socket.on('resetConnections', function() {
+		console.log('ResetConnections() called');
+		// Reset all connections.
+		clientCnt = 0;
+		clients = {};
+		io.sockets.clients().forEach(function(sock) {
+			sock.emit('msg', {
+				msg : 'Closing all sockets.'
+			});
+			sock.disconnect();
+		});
+	});
+
 	// Listen for clients disconnecting.
 	socket.on('disconnect', function() {
+		console.log('Disconnecting client ' + id);
 		delete clients[id];
 		io.sockets.emit('msg', {
 			msg : 'User ' + id + ' disconnected.'
