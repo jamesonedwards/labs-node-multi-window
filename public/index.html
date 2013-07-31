@@ -6,8 +6,8 @@
 	<body>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-		  //var socket = io.connect('http://node.labsmb.com'/*, {
-		  var socket = io.connect('http://localhost'/*, {
+		  var socket = io.connect('http://node.labsmb.com'/*, {
+		  //var socket = io.connect('http://localhost'/*, {
 			  'reconnect': true,
 			  'reconnection delay': 500,
 			  'max reconnection attempts': 10
@@ -31,7 +31,7 @@
 		  });
 		</script>
 
-		<canvas id="myCanvas" width="100%" height="200"></canvas>
+		<canvas id="myCanvas" width="600" height="200" border="1"></canvas>
 		<div id="clientId"></div>
 		<div id="msg">(Awaiting message...)</div>
 		<div><a id="resetLink" href="#resetLink">Reset connections</a></div>

@@ -33,7 +33,8 @@ var clients = {};
 var clientCnt = 0;
 
 // The static list of colors.
-var colors = [ '#FBEFEF', '#F8E0E0', '#F6CECE', '#F5A9A9', '#F78181', '#FA5858', '#FE2E2E', '#FF0000', '#DF0101', '#B40404', '#8A0808', '#610B0B', '#3B0B0B', '#2A0A0A', '#190707' ];
+//var colors = [ '#FBEFEF', '#F8E0E0', '#F6CECE', '#F5A9A9', '#F78181', '#FA5858', '#FE2E2E', '#FF0000', '#DF0101', '#B40404', '#8A0808', '#610B0B', '#3B0B0B', '#2A0A0A', '#190707' ];
+var colors = [ '#FF0000', '#FF4000', '#FF8000', '#FFBF00', '#FFFF00', '#BFFF00', '#80FF00', '#40FF00', '#00FF00', '#00FF40', '#00FF80', '#00FFBF', '#00FFFF', '#00BFFF', '#0080FF', '#0040FF', '#0000FF', '#4000FF', '#8000FF', '#BF00FF', '#FF00FF', '#FF00BF', '#FF0080', '#FF0040', '#848484' ];
 
 // The namespace ("room") to use for incomming connections.
 // var socketNamespace = '';
