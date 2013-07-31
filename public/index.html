@@ -6,8 +6,8 @@
 	<body>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-		  var socket = io.connect('http://node.labsmb.com'/*, {
-		  //var socket = io.connect('http://localhost'/*, {
+		  //var socket = io.connect('http://node.labsmb.com'/*, {
+		  var socket = io.connect('http://localhost'/*, {
 			  'reconnect': true,
 			  'reconnection delay': 500,
 			  'max reconnection attempts': 10
@@ -16,6 +16,10 @@
 		  	$("#msg").text(data.msg);
 		  });
 		  
+		  socket.on('setClientId', function (data) {
+		  	$("#clientId").text('You are client: ' + data.clientId);
+		  });
+
 		  socket.on('disconnect', function() {
 		  	console.log('Client disconnected. Trying to reconnect...');
 		  	socket.socket.reconnect();
@@ -27,7 +31,8 @@
 		  });
 		</script>
 
-		<canvas id="myCanvas" width="578" height="200"></canvas>
+		<canvas id="myCanvas" width="100%" height="200"></canvas>
+		<div id="clientId"></div>
 		<div id="msg">(Awaiting message...)</div>
 		<div><a id="resetLink" href="#resetLink">Reset connections</a></div>
 
@@ -37,7 +42,7 @@
 			
 			$("#myCanvas").click(function(e){
 			    console.log('Canvas clicked');
-			    socket.emit('shuffle');
+			    socket.emit('shiftColors');
 			 });
 			
 			$("#resetLink").click(function(e){

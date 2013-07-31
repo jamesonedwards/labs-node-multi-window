@@ -33,7 +33,7 @@ var clients = {};
 var clientCnt = 0;
 
 // The static list of colors.
-var colors = [ '#FF0000', '#BFFF00', '#045FB4', '#2EFE64', '#240B3B' ];
+var colors = [ '#FBEFEF', '#F8E0E0', '#F6CECE', '#F5A9A9', '#F78181', '#FA5858', '#FE2E2E', '#FF0000', '#DF0101', '#B40404', '#8A0808', '#610B0B', '#3B0B0B', '#2A0A0A', '#190707' ];
 
 // The namespace ("room") to use for incomming connections.
 // var socketNamespace = '';
@@ -59,6 +59,10 @@ io.sockets.on('connection', function(socket) {
 		msg : 'Connecting...you are user ' + id
 	});
 
+	socket.emit('setClientId', {
+		clientId : id
+	});
+	
 	// Add client to list.
 	clients[id] = socket;
 	console.log((new Date()) + ' Connection accepted [' + id + ']');
@@ -80,7 +84,7 @@ io.sockets.on('connection', function(socket) {
 	}
 
 	// Listen for color shift.
-	socket.on('shift', function() {
+	socket.on('shiftColors', function() {
 		console.log('Shuffle() called');
 		io.sockets.emit('msg', {
 			msg : 'Shuffle() called by user ' + id
